@@ -27,6 +27,14 @@ public class EmployerController {
         this.employerRepository = employerRepository;
     }
 
+    @GetMapping
+    public String displayAllEmployers(Model model) {
+//        model.addAttribute("name", "All Employers");
+        model.addAttribute("employers", employerRepository.findAll());
+        return "employers/index";
+
+    }
+
     @GetMapping("add")
     public String displayAddEmployerForm(Model model) {
         model.addAttribute(new Employer());
@@ -34,16 +42,17 @@ public class EmployerController {
     }
 
     @PostMapping("add")
-    public String processAddEmployerForm(@ModelAttribute @Valid Employer newEmployer,
-                                    Errors errors, Model model) {
+    public String processAddEmployerForm(@ModelAttribute @Valid Employer employers,
+                                         Errors errors, Model model) {
 
         if (errors.hasErrors()) {
             return "employers/add";
         }
 
-        employerRepository.save(newEmployer);
-        model.addAttribute("employer", newEmployer);
-        return "employers/view";
+        employerRepository.save(employers);
+//        model.addAttribute("employers", employers);
+        model.addAttribute("employers", employerRepository.findAll());
+        return "employers/index";
     }
 
     @GetMapping("view/{employerId}")
@@ -56,7 +65,10 @@ public class EmployerController {
             model.addAttribute("employer", employer);
             return "employers/view";
         } else {
-            return "redirect:../";
+            model.addAttribute("employer", employerRepository.findAll());
+            return "employers/view";
         }
     }
+
+
 }
