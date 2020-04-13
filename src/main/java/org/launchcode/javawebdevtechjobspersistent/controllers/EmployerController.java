@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.launchcode.javawebdevtechjobspersistent.models.data.EmployerRepository;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -30,7 +29,7 @@ public class EmployerController {
     @GetMapping
     public String displayAllEmployers(Model model) {
 //        model.addAttribute("name", "All Employers");
-        model.addAttribute("employers", employerRepository.findAll());
+        model.addAttribute("employer", employerRepository.findAll());
         return "employers/index";
 
     }
@@ -42,15 +41,17 @@ public class EmployerController {
     }
 
     @PostMapping("add")
-    public String processAddEmployerForm(@ModelAttribute @Valid Employer employers,
-                                         Errors errors, Model model) {
+    public String processAddEmployerForm(@ModelAttribute @Valid Employer employer,
+                                         Errors errors, Model model, Iterable<Employer> allEmployers) {
 
         if (errors.hasErrors()) {
             return "employers/add";
         }
 
-        employerRepository.save(employers);
-//        model.addAttribute("employers", employers);
+        employerRepository.save(employer);
+//        allEmployers = employerRepository.findAll();
+//        model.addAttribute("employer", allEmployers);
+        model.addAttribute("employer", employer);
         model.addAttribute("employers", employerRepository.findAll());
         return "employers/index";
     }
