@@ -8,6 +8,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -50,4 +51,5 @@ public abstract class AbstractEntity {
         return Objects.hash(id);
     }
 
+    public abstract void setSkills(List<Skill> skillObjs);
 }

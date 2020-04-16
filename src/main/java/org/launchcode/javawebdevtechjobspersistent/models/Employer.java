@@ -29,4 +29,8 @@ public class Employer extends AbstractEntity {
     @OneToMany
     private List<Job> jobs = new ArrayList<>();
 
+    @Override
+    public void setSkills(List<Skill> skillObjs) {
+
+    }
 }
