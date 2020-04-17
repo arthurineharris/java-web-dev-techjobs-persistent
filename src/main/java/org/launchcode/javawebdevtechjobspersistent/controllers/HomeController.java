@@ -37,6 +37,8 @@ public class HomeController {
     public String displayAddJobForm(Model model) {
         model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
+        model.addAttribute("employers", employerRepository.findAll());
+        model.addAttribute("skills", skillRepository.findAll());
         return "add";
     }
 
@@ -50,7 +52,7 @@ public class HomeController {
         }
 
         employerRepository.findById(employerId);
-        model.addAttribute("employer Id", employerId);
+        model.addAttribute("employerId", employerId);
 
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);
