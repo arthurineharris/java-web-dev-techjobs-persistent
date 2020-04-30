@@ -35,10 +35,12 @@ public class HomeController {
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
+
         model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
+
         return "add";
     }
 
@@ -57,7 +59,7 @@ public class HomeController {
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);
         model.addAttribute("skills", skills);
-
+//        model.addAttribute("skillObjs", skillObjs);
         return "redirect:";
     }
 
