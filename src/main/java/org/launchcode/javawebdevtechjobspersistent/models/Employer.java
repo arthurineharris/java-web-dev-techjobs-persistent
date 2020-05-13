@@ -25,12 +25,16 @@ public class Employer extends AbstractEntity {
 
     public Employer() {};
 
-    @JoinColumn
-    @OneToMany
+//    @JoinColumn
+    @OneToMany(mappedBy = "employer")
     private List<Job> jobs = new ArrayList<>();
 
     @Override
     public void setSkills(List<Skill> skillObjs) {
 
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
     }
 }

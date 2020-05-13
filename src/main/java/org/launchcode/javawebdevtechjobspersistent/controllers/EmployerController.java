@@ -27,9 +27,21 @@ public class EmployerController {
     }
 
     @GetMapping
-    public String displayAllEmployers(Model model) {
-//        model.addAttribute("name", "All Employers");
-        model.addAttribute("employer", employerRepository.findAll());
+    public String displayAllEmployers(@RequestParam(required = false) Integer employerId, Model model) {
+//
+        if (employerId == null) {
+//            model.addAttribute("title", "All Employers");
+            model.addAttribute("employers", employerRepository.findAll());
+        } else {
+            Optional<Employer> result = employerRepository.findById(employerId);
+            if (result.isEmpty()) {
+                model.addAttribute("title", "Invalid Employer Id:" + employerId);
+            } else {
+               Employer employer = result.get();
+               model.addAttribute("title", "Employers in TechJobs:" + employer.getName());
+               model.addAttribute("employers", employer.getJobs());
+            }
+        }
         return "employers/index";
 
     }
@@ -57,7 +69,7 @@ public class EmployerController {
     }
 
     @GetMapping("view/{employerId}")
-    public String displayViewEmployer(Model model, @PathVariable int employerId) {
+    public String displayViewEmployer(Model model, @PathVariable Integer employerId) {
 
         Optional optEmployer = employerRepository.findById(employerId);
 
